@@ -8,7 +8,7 @@ const connectdb = require("./Utility/DataBase");
 const bodyParser = require('body-parser'); 
 
 const corsOption = {
-    origin: "https://qimk.pages.dev/",
+    origin: "https://qimk.pages.dev",
     methods: "GET, POST, PUT, DELETE, PATCH ,HEAD",
     Credentials: true,
 };
