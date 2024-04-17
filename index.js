@@ -5,8 +5,7 @@ const app = express();
 const userrouter = require("./Router/User");
 const adminrouter = require("./Router/Admin");
 const connectdb = require("./Utility/DataBase");
-const bodyParser = require('body-parser'); 
-
+const bodyParser = require("body-parser");
 
 const corsOption = {
     origin: "https://qimk.pages.dev",
