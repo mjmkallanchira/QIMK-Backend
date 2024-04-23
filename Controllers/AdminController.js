@@ -10,6 +10,7 @@ const NotesModel = require("../Models/Notes-model");
 const GuidesModel = require("../Models/Guides-model");
 const DikrModel = require("../Models/Dikr-model");
 const DuaModel = require("../Models/Dua-request-model");
+const RepresentativeModel = require("../Models/Representative-model");
 
 const adminhomecontroller = (req, res) => {
     res.send("admin home ");
@@ -491,6 +492,98 @@ const admindeleteduacontroller = async (req, res) => {
         console.log(error);
     }
 };
+const adminaddrepresentatives = async (req, res) => {
+    try {
+        // console.log(req.body);
+        const datamodel = {
+            name: req.body.name,
+            image: req.body.image,
+            type: req.body.type,
+            vote: 0,
+        };
+        const typeexist = await RepresentativeModel.findOne({
+            type: req.body.type,
+        });
+        console.log(typeexist);
+        if (typeexist) {
+            const Representativeexist = await RepresentativeModel.findOne({
+                type: req.body.type,
+                "Representative.name": req.body.name,
+            });
+            if (Representativeexist) {
+                return res
+                    .status(404)
+                    .json({ err: "Representative already exist" });
+            }
+            const response = await RepresentativeModel.updateOne(
+                {
+                    type: req.body.type,
+                },
+                {
+                    $push: {
+                        Representative: datamodel,
+                    },
+                }
+            );
+            res.json(response);
+        } else {
+            const response = await RepresentativeModel.create({
+                type: req.body.type,
+                Representative: [datamodel],
+            });
+            res.json(response);
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(404).json(error);
+    }
+};
+const admingetrepresentatives = async (req, res) => {
+    try {
+        const response = await RepresentativeModel.find();
+        res.json(response);
+    } catch (error) {
+        console.log(error);
+    }
+};
+const admindeleterepresentatives = async (req, res) => {
+    try {
+        const response = await RepresentativeModel.updateOne(
+            {
+                type: req.body.type,
+            },
+            {
+                $pull: {
+                    Representative: { name: req.body.name },
+                },
+            }
+        );
+        res.json(response);
+    } catch (error) {
+        console.log(error);
+    }
+};
+const adminclearvote = async (req, res) => {
+    try {
+        // console.log(req.params);
+
+        const response = await RepresentativeModel.updateOne(
+            {
+                type: req.params.type,
+                "Representative.name": req.params.name,
+            },
+            {
+                $set: {
+                    "Representative.$.vote": 0,
+                },
+            }
+        );
+        res.json(response);
+        console.log(response);
+    } catch (error) {
+        console.log(error);
+    }
+};
 // const admingetlivecontroller = async (req,res) => {
 //     try {
 //     } catch (error) {
@@ -531,5 +624,9 @@ module.exports = {
     admindeletedikrcontroller,
     admingetdikrcontroller,
     admingetduacontroller,
-    admindeleteduacontroller
+    admindeleteduacontroller,
+    adminaddrepresentatives,
+    admingetrepresentatives,
+    admindeleterepresentatives,
+    adminclearvote,
 };

@@ -11,6 +11,7 @@ const GuidesModel = require("../Models/Guides-model");
 const NotesModel = require("../Models/Notes-model");
 const DikrModel = require("../Models/Dikr-model");
 const DuaModel = require("../Models/Dua-request-model");
+const RepresentativeModel = require("../Models/Representative-model");
 const bcrypt = require("bcryptjs");
 // const added = await UserModel.create({
 //     username: "username",
@@ -231,6 +232,32 @@ const addduarequest = async (req, res) => {
         console.log(error);
     }
 };
+const getrepresentativedata = async (req, res) => {
+    try {
+        const response = await RepresentativeModel.findOne({
+            type: req.params.type,
+        });
+        res.json(response);
+    } catch (error) {
+        console.log(error);
+    }
+};
+const addvote = async (req, res) => {
+    try {
+        const response = await RepresentativeModel.updateOne(
+            {
+                type: req.params.type,
+                "Representative.name": req.params.name,
+            },
+            {
+                $inc: { "Representative.$.vote": 1 },
+            }
+        );
+        res.json(response)
+    } catch (error) {
+        console.log(error);
+    }
+};
 // const admingetlivecontroller = async (req,res) => {
 //     try {
 //     } catch (error) {
@@ -252,4 +279,6 @@ module.exports = {
     getsubjectdata,
     getdikrdata,
     addduarequest,
+    getrepresentativedata,
+    addvote,
 };
