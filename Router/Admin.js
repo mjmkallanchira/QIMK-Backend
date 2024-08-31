@@ -39,5 +39,11 @@ router.route('/get-dikr-pdf').get(AdminController.admingetdikrcontroller)
 router.route('/get-dua-data').get(AdminController.admingetduacontroller)
 router.route('/delete-dua/:id').get(AdminController.admindeleteduacontroller)
 router.route('/delete-dikr-pdf/:id').delete(AdminController.admindeletedikrcontroller)
+router.route('/add-team').post(AdminController.adminaddteamcontroller)
+router.route('/get-team-data').get(AdminController.admingetteamdatacontroller)
+router.route('/delete-team/:id').delete(AdminController.admindeleteteamcontroller)
+router.route('/add-points/:points/:id').post(AdminController.adminaddpointscontroller)
+
+
 
 module.exports=router

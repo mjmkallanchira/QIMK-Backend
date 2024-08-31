@@ -11,6 +11,7 @@ const GuidesModel = require("../Models/Guides-model");
 const DikrModel = require("../Models/Dikr-model");
 const DuaModel = require("../Models/Dua-request-model");
 const RepresentativeModel = require("../Models/Representative-model");
+const TeamModel = require("../Models/Team-model");
 
 const adminhomecontroller = (req, res) => {
     res.send("admin home ");
@@ -584,13 +585,55 @@ const adminclearvote = async (req, res) => {
         console.log(error);
     }
 };
-// const admingetlivecontroller = async (req,res) => {
+const adminaddteamcontroller = async (req, res) => {
+    try {
+        console.log(req.body);
+        const response = await TeamModel.create(req.body);
+        res.json(response);
+    } catch (error) {
+        console.log(error);
+    }
+};
+const admingetteamdatacontroller = async (req, res) => {
+    try {
+        const response = await TeamModel.find();
+        res.json(response);
+    } catch (error) {
+        console.log(error);
+    }
+};
+const admindeleteteamcontroller = async (req, res) => {
+    try {
+        console.log(req.params.id);
+        const response = await TeamModel.deleteOne({ _id: req.params.id });
+        res.json(response);
+    } catch (error) {
+        console.log(error);
+    }
+};
+const adminaddpointscontroller = async (req,res) => {
+    try {
+        // console.log(req.params.points);
+        const response = await TeamModel.updateOne(
+            {
+                _id: req.params.id,
+            },
+            {
+                $set: { point: req.params.points },
+            }
+        );
+        res.json(response);
+        
+    } catch (error) {
+        console.log(error);
+    }
+};
+// const adminaddpointscontroller = async (req,res) => {
 //     try {
 //     } catch (error) {
 //         console.log(error);
 //     }
 // };
-
 module.exports = {
     adminhomecontroller,
     adminprayercontroller,
@@ -629,4 +672,8 @@ module.exports = {
     admingetrepresentatives,
     admindeleterepresentatives,
     adminclearvote,
+    adminaddteamcontroller,
+    admingetteamdatacontroller,
+    admindeleteteamcontroller,
+    adminaddpointscontroller
 };

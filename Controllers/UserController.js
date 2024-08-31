@@ -12,6 +12,7 @@ const NotesModel = require("../Models/Notes-model");
 const DikrModel = require("../Models/Dikr-model");
 const DuaModel = require("../Models/Dua-request-model");
 const RepresentativeModel = require("../Models/Representative-model");
+const TeamModel = require("../Models/Team-model");
 const bcrypt = require("bcryptjs");
 // const added = await UserModel.create({
 //     username: "username",
@@ -258,6 +259,14 @@ const addvote = async (req, res) => {
         console.log(error);
     }
 };
+const getteamdata = async (req, res) => {
+    try {
+        const response = await TeamModel.find();
+        res.json(response);
+    } catch (error) {
+        console.log(error);
+    }
+};
 // const admingetlivecontroller = async (req,res) => {
 //     try {
 //     } catch (error) {
@@ -281,4 +290,5 @@ module.exports = {
     addduarequest,
     getrepresentativedata,
     addvote,
+    getteamdata
 };

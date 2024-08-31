@@ -17,6 +17,7 @@ router.route('/get-educator-data').get(UserController.geteducatordata)
 router.route('/add-vote/:name/:type').get(UserController.addvote)
 router.route('/getallrepresentatives/:type').get(UserController.getrepresentativedata)
 router.route('/:type/get-subject-data/:class').get(UserController.getsubjectdata)
+router.route('/get-team-data').get(UserController.getteamdata)
 
 
 module.exports = router;
