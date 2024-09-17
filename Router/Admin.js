@@ -42,7 +42,7 @@ router.route('/delete-dikr-pdf/:id').delete(AdminController.admindeletedikrcontr
 router.route('/add-team').post(AdminController.adminaddteamcontroller)
 router.route('/get-team-data').get(AdminController.admingetteamdatacontroller)
 router.route('/delete-team/:id').delete(AdminController.admindeleteteamcontroller)
-router.route('/add-points/:points/:id').post(AdminController.adminaddpointscontroller)
+router.route('/add-points/:stagepoints/:offstagepointa/:id').post(AdminController.adminaddpointscontroller)
 
 
 

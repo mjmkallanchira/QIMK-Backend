@@ -619,7 +619,7 @@ const adminaddpointscontroller = async (req,res) => {
                 _id: req.params.id,
             },
             {
-                $set: { point: req.params.points },
+                $set: { stagepoint: req.params.stagepoints,offstagepoint:req.params.offstagepointa },
             }
         );
         res.json(response);
